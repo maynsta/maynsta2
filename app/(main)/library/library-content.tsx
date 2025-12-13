@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import type { Playlist, LibraryItem, Profile, Song, Album } from "@/lib/types"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
@@ -74,8 +74,26 @@ export function LibraryContent({
     { fallbackData: initialLibraryAlbums },
   )
 
-  const songs: Song[] = (librarySongs || []).map((item) => item.song).filter(Boolean) as Song[]
-  const albums: Album[] = (libraryAlbums || []).map((item) => item.album).filter(Boolean) as Album[]
+  /* ✅ DEDUPLIKATION – DAS FIXT DEN BUG */
+  const songs: Song[] = useMemo(() => {
+    const map = new Map<string, Song>()
+    ;(librarySongs || []).forEach((item) => {
+      if (item.song && !map.has(item.song.id)) {
+        map.set(item.song.id, item.song)
+      }
+    })
+    return Array.from(map.values())
+  }, [librarySongs])
+
+  const albums: Album[] = useMemo(() => {
+    const map = new Map<string, Album>()
+    ;(libraryAlbums || []).forEach((item) => {
+      if (item.album && !map.has(item.album.id)) {
+        map.set(item.album.id, item.album)
+      }
+    })
+    return Array.from(map.values())
+  }, [libraryAlbums])
 
   return (
     <div className="p-8">
@@ -86,7 +104,6 @@ export function LibraryContent({
             variant={viewMode === "list" ? "default" : "outline"}
             size="icon"
             onClick={() => setViewMode("list")}
-            title="Listenansicht"
           >
             <List className="h-4 w-4" />
           </Button>
@@ -94,7 +111,6 @@ export function LibraryContent({
             variant={viewMode === "grid" ? "default" : "outline"}
             size="icon"
             onClick={() => setViewMode("grid")}
-            title="Rasteransicht"
           >
             <Grid className="h-4 w-4" />
           </Button>
@@ -116,7 +132,7 @@ export function LibraryContent({
             </Button>
           </div>
 
-          {!playlists || playlists.length === 0 ? (
+          {!playlists?.length ? (
             <div className="text-center py-12">
               <Music className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
               <p className="text-muted-foreground">Noch keine Playlists erstellt.</p>
@@ -137,7 +153,7 @@ export function LibraryContent({
         </TabsContent>
 
         <TabsContent value="songs">
-          {songs.length === 0 ? (
+          {!songs.length ? (
             <div className="text-center py-12">
               <Music className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
               <p className="text-muted-foreground">Noch keine Songs in der Bibliothek.</p>
@@ -152,7 +168,9 @@ export function LibraryContent({
                   playlists={playlists || []}
                   showExplicitWarning={!!profile?.parental_controls_enabled}
                   isBlocked={
-                    song.is_explicit && profile?.parental_controls_enabled && !profile.explicit_content_enabled
+                    song.is_explicit &&
+                    profile?.parental_controls_enabled &&
+                    !profile.explicit_content_enabled
                   }
                 />
               ))}
@@ -161,7 +179,7 @@ export function LibraryContent({
         </TabsContent>
 
         <TabsContent value="albums">
-          {albums.length === 0 ? (
+          {!albums.length ? (
             <div className="text-center py-12">
               <Disc className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
               <p className="text-muted-foreground">Noch keine Alben in der Bibliothek.</p>
@@ -190,3 +208,4 @@ export function LibraryContent({
     </div>
   )
 }
+

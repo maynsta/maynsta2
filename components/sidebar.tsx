@@ -18,7 +18,7 @@ export function Sidebar() {
   return (
     <aside className="fixed left-0 top-0 z-40 flex h-full w-64 flex-col border-r border-border bg-card">
       <div className="flex h-16 items-center gap-2 px-6 border-b border-border">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary">
+        <div className="flex h-10 w-10 items-center justify-center rounded-[510px]-full bg-primary">
           <Music className="h-5 w-5 text-primary-foreground" />
         </div>
         <span className="text-xl font-bold text-card-foreground">Maynsta</span>
@@ -33,7 +33,7 @@ export function Sidebar() {
                 <Link
                   href={item.href}
                   className={cn(
-                    "flex items-center gap-3 rounded-full px-4 py-3 text-sm font-medium transition-colors",
+                    "flex items-center gap-3 rounded-[510px]-full px-4 py-3 text-sm font-medium transition-colors",
                     isActive
                       ? "bg-primary text-primary-foreground"
                       : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",

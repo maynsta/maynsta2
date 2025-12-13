@@ -140,12 +140,12 @@ export function SongListItem({
   return (
     <>
       <div
-        className={`flex items-center gap-3 p-3 rounded-lg hover:bg-accent/50 transition-colors group ${
+        className={`flex items-center gap-3 p-3 rounded-[510px]-lg hover:bg-accent/50 transition-colors group ${
           isBlocked && showExplicitWarning ? "opacity-50" : ""
         }`}
       >
         {/* Cover */}
-        <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-muted overflow-hidden">
+        <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-[510px]-md bg-muted overflow-hidden">
           {song.cover_url ? (
             <img src={song.cover_url || "/placeholder.svg"} alt={song.title} className="h-full w-full object-cover" />
           ) : (
@@ -168,7 +168,7 @@ export function SongListItem({
             className={`text-sm font-medium truncate ${isCurrentSong ? "text-primary" : "text-foreground"} ${isBlocked && showExplicitWarning ? "line-through" : ""}`}
           >
             {song.title}
-            {song.is_explicit && <span className="ml-2 text-xs text-muted-foreground bg-muted px-1 rounded">E</span>}
+            {song.is_explicit && <span className="ml-2 text-xs text-muted-foreground bg-muted px-1 rounded-[510px]">E</span>}
           </p>
           <p className="text-xs text-muted-foreground truncate">{song.artist?.display_name || "Unbekannt"}</p>
         </div>
@@ -178,7 +178,7 @@ export function SongListItem({
           <Button
             variant="ghost"
             size="icon"
-            className="h-8 w-8 rounded-full"
+            className="h-8 w-8 rounded-[510px]-full"
             onClick={handlePlay}
             disabled={isBlocked}
           >
@@ -187,7 +187,7 @@ export function SongListItem({
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full">
+              <Button variant="ghost" size="icon" className="h-8 w-8 rounded-[510px]-full">
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>

@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState, useRef } from "react"
 import {
   Dialog,
@@ -27,7 +26,13 @@ interface AddSongToAlbumDialogProps {
   onCreated?: () => void
 }
 
-export function AddSongToAlbumDialog({ open, onOpenChange, album, userId, onCreated }: AddSongToAlbumDialogProps) {
+export function AddSongToAlbumDialog({
+  open,
+  onOpenChange,
+  album,
+  userId,
+  onCreated,
+}: AddSongToAlbumDialogProps) {
   const [title, setTitle] = useState("")
   const [audioFile, setAudioFile] = useState<File | null>(null)
   const [isExplicit, setIsExplicit] = useState(false)
@@ -51,8 +56,8 @@ export function AddSongToAlbumDialog({ open, onOpenChange, album, userId, onCrea
     if (audioFile) {
       const fileExt = audioFile.name.split(".").pop()
       const fileName = `${userId}/${Date.now()}-audio.${fileExt}`
-      const { data: uploadData } = await supabase.storage.from("audio").upload(fileName, audioFile)
-      if (uploadData) {
+      const { data } = await supabase.storage.from("audio").upload(fileName, audioFile)
+      if (data) {
         const {
           data: { publicUrl },
         } = supabase.storage.from("audio").getPublicUrl(fileName)
@@ -63,8 +68,8 @@ export function AddSongToAlbumDialog({ open, onOpenChange, album, userId, onCrea
     if (hasVideo && videoFile) {
       const fileExt = videoFile.name.split(".").pop()
       const fileName = `${userId}/${Date.now()}-video.${fileExt}`
-      const { data: uploadData } = await supabase.storage.from("videos").upload(fileName, videoFile)
-      if (uploadData) {
+      const { data } = await supabase.storage.from("videos").upload(fileName, videoFile)
+      if (data) {
         const {
           data: { publicUrl },
         } = supabase.storage.from("videos").getPublicUrl(fileName)
@@ -96,11 +101,16 @@ export function AddSongToAlbumDialog({ open, onOpenChange, album, userId, onCrea
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md rounded-xl">
+      <DialogContent className="sm:max-w-md rounded-[10px]">
         <DialogHeader>
-          <DialogTitle>Song zu "{album.title}" hinzufügen</DialogTitle>
-          <DialogDescription>Füge einen neuen Song zu diesem Album hinzu.</DialogDescription>
+          <DialogTitle>
+            Song zu &quot;{album.title}&quot; hinzufügen
+          </DialogTitle>
+          <DialogDescription>
+            Füge einen neuen Song zu diesem Album hinzu.
+          </DialogDescription>
         </DialogHeader>
+
         <form onSubmit={handleCreate}>
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
@@ -111,7 +121,7 @@ export function AddSongToAlbumDialog({ open, onOpenChange, album, userId, onCrea
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 required
-                className="rounded-lg"
+                className="rounded-[10px]"
               />
             </div>
 
@@ -127,7 +137,7 @@ export function AddSongToAlbumDialog({ open, onOpenChange, album, userId, onCrea
               <Button
                 type="button"
                 variant="outline"
-                className="rounded-full justify-start bg-transparent"
+                className="rounded-[10px] justify-start bg-transparent"
                 onClick={() => audioInputRef.current?.click()}
               >
                 <Music className="h-4 w-4 mr-2" />
@@ -138,7 +148,9 @@ export function AddSongToAlbumDialog({ open, onOpenChange, album, userId, onCrea
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label>Expliziter Inhalt</Label>
-                <p className="text-xs text-muted-foreground">Song enthält unangemessene Inhalte</p>
+                <p className="text-xs text-muted-foreground">
+                  Song enthält unangemessene Inhalte
+                </p>
               </div>
               <Switch checked={isExplicit} onCheckedChange={setIsExplicit} />
             </div>
@@ -146,7 +158,9 @@ export function AddSongToAlbumDialog({ open, onOpenChange, album, userId, onCrea
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label>Musikvideo</Label>
-                <p className="text-xs text-muted-foreground">Hat dieser Song ein Musikvideo?</p>
+                <p className="text-xs text-muted-foreground">
+                  Hat dieser Song ein Musikvideo?
+                </p>
               </div>
               <Switch checked={hasVideo} onCheckedChange={setHasVideo} />
             </div>
@@ -164,7 +178,7 @@ export function AddSongToAlbumDialog({ open, onOpenChange, album, userId, onCrea
                 <Button
                   type="button"
                   variant="outline"
-                  className="rounded-full justify-start bg-transparent"
+                  className="rounded-[10px] justify-start bg-transparent"
                   onClick={() => videoInputRef.current?.click()}
                 >
                   <Upload className="h-4 w-4 mr-2" />
@@ -173,11 +187,21 @@ export function AddSongToAlbumDialog({ open, onOpenChange, album, userId, onCrea
               </div>
             )}
           </div>
+
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="rounded-full">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+              className="rounded-[10px]"
+            >
               Abbrechen
             </Button>
-            <Button type="submit" disabled={isLoading || !title.trim()} className="rounded-full">
+            <Button
+              type="submit"
+              disabled={isLoading || !title.trim()}
+              className="rounded-[10px]"
+            >
               {isLoading ? "Hinzufügen..." : "Hinzufügen"}
             </Button>
           </DialogFooter>
@@ -186,3 +210,4 @@ export function AddSongToAlbumDialog({ open, onOpenChange, album, userId, onCrea
     </Dialog>
   )
 }
+

@@ -79,75 +79,85 @@ export function CreateAlbumDialog({ open, onOpenChange, userId, onCreated }: Cre
     onCreated?.()
   }
 
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>Neues Album erstellen</DialogTitle>
-          <DialogDescription>Erstelle ein neues Album und füge dann Songs hinzu.</DialogDescription>
-        </DialogHeader>
-        <form onSubmit={handleCreate}>
-          <div className="grid gap-4 py-4">
-            <div className="grid gap-2">
-              <Label htmlFor="title">Album Titel</Label>
-              <Input
-                id="title"
-                placeholder="Album Name"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
-              />
-            </div>
+return (
+  <Dialog open={open} onOpenChange={onOpenChange}>
+    <DialogContent className="sm:max-w-md rounded-[20px]">
+      <DialogHeader>
+        <DialogTitle>Neues Album erstellen</DialogTitle>
+        <DialogDescription>Erstelle ein neues Album und füge dann Songs hinzu.</DialogDescription>
+      </DialogHeader>
+      <form onSubmit={handleCreate}>
+        <div className="grid gap-4 py-4">
+          <div className="grid gap-2">
+            <Label htmlFor="title">Album Titel</Label>
+            <Input
+              id="title"
+              placeholder="Album Name"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+            />
+          </div>
 
-            <div className="grid gap-2">
-              <Label>Cover Bild</Label>
-              <div className="flex gap-3 items-center">
-                <div
-                  className="flex h-20 w-20 shrink-0 items-center justify-center rounded-md bg-muted cursor-pointer overflow-hidden border-2 border-dashed border-border hover:border-primary transition-colors"
+          <div className="grid gap-2">
+            <Label>Cover Bild</Label>
+            <div className="flex gap-3 items-center">
+              <div
+                className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[20px] bg-muted cursor-pointer overflow-hidden border-2 border-dashed border-border hover:border-primary transition-colors"
+                onClick={() => coverInputRef.current?.click()}
+              >
+                {coverPreview ? (
+                  <img
+                    src={coverPreview || "/placeholder.svg"}
+                    alt="Cover preview"
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <ImagePlus className="h-8 w-8 text-muted-foreground" />
+                )}
+              </div>
+              <div className="flex-1">
+                <input
+                  ref={coverInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleCoverChange}
+                  className="hidden"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="rounded-[20px] bg-transparent"
                   onClick={() => coverInputRef.current?.click()}
                 >
-                  {coverPreview ? (
-                    <img
-                      src={coverPreview || "/placeholder.svg"}
-                      alt="Cover preview"
-                      className="h-full w-full object-cover"
-                    />
-                  ) : (
-                    <ImagePlus className="h-8 w-8 text-muted-foreground" />
-                  )}
-                </div>
-                <div className="flex-1">
-                  <input
-                    ref={coverInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleCoverChange}
-                    className="hidden"
-                  />
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="rounded-full bg-transparent"
-                    onClick={() => coverInputRef.current?.click()}
-                  >
-                    <Upload className="h-4 w-4 mr-2" />
-                    Cover hochladen
-                  </Button>
-                  {coverFile && <p className="text-xs text-muted-foreground mt-1">{coverFile.name}</p>}
-                </div>
+                  <Upload className="h-4 w-4 mr-2" />
+                  Cover hochladen
+                </Button>
+                {coverFile && <p className="text-xs text-muted-foreground mt-1">{coverFile.name}</p>}
               </div>
             </div>
           </div>
-          <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="rounded-full">
-              Abbrechen
-            </Button>
-            <Button type="submit" disabled={isLoading || !title.trim()} className="rounded-full">
-              {isLoading ? "Erstellen..." : "Erstellen"}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
-  )
+        </div>
+
+        <DialogFooter>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => onOpenChange(false)}
+            className="rounded-[20px]"
+          >
+            Abbrechen
+          </Button>
+          <Button
+            type="submit"
+            disabled={isLoading || !title.trim()}
+            className="rounded-[20px]"
+          >
+            {isLoading ? "Erstellen..." : "Erstellen"}
+          </Button>
+        </DialogFooter>
+      </form>
+    </DialogContent>
+  </Dialog>
+)
 }

@@ -100,81 +100,77 @@ export function ArtistDashboard({
   return (
     <div className="p-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-foreground mb-2">Artist Dashboard</h1>
+        <h1 className="text-3xl font-bold mb-2">Artist Dashboard</h1>
         <p className="text-muted-foreground">
-          Willkommen zurück, {profile.artist_name || profile.display_name}! Verwalte hier deine Musik.
+          Willkommen zurück, {profile.artist_name || profile.display_name}!
         </p>
       </div>
 
       <Tabs defaultValue="singles">
-        <TabsList className="mb-6 rounded-xl">
-          <TabsTrigger value="singles" className="flex items-center gap-2 rounded-lg">
+        <TabsList className="mb-6 rounded-[10px]">
+          <TabsTrigger value="singles" className="flex items-center gap-2 rounded-[10px]">
             <Music className="h-4 w-4" />
             Singles
           </TabsTrigger>
-          <TabsTrigger value="albums" className="flex items-center gap-2 rounded-lg">
+          <TabsTrigger value="albums" className="flex items-center gap-2 rounded-[10px]">
             <Disc className="h-4 w-4" />
             Alben
           </TabsTrigger>
         </TabsList>
 
-        {/* Singles Tab */}
+        {/* Singles */}
         <TabsContent value="singles">
-          <div className="mb-4">
-            <Button onClick={() => setShowCreateSingle(true)} className="rounded-full">
-              <Plus className="h-4 w-4 mr-2" />
-              Single hochladen
-            </Button>
-          </div>
+          <Button onClick={() => setShowCreateSingle(true)} className="mb-4 rounded-[10px]">
+            <Plus className="h-4 w-4 mr-2" />
+            Single hochladen
+          </Button>
 
-          {!singles || singles.length === 0 ? (
-            <Card className="rounded-xl">
-              <CardContent className="flex flex-col items-center justify-center py-12">
-                <Music className="h-12 w-12 text-muted-foreground mb-4" />
+          {!singles?.length ? (
+            <Card className="rounded-[10px]">
+              <CardContent className="py-12 text-center">
+                <Music className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
                 <p className="text-muted-foreground">Noch keine Singles hochgeladen.</p>
               </CardContent>
             </Card>
           ) : (
             <div className="grid gap-4">
               {singles.map((single) => (
-                <Card key={single.id} className="rounded-xl">
+                <Card key={single.id} className="rounded-[10px]">
                   <CardContent className="flex items-center gap-4 p-4">
-                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-lg bg-muted overflow-hidden">
+                    <div className="h-16 w-16 rounded-[10px] bg-muted overflow-hidden flex items-center justify-center">
                       {single.cover_url ? (
-                        <img
-                          src={single.cover_url || "/placeholder.svg"}
-                          alt={single.title}
-                          className="h-full w-full object-cover"
-                        />
+                        <img src={single.cover_url} className="h-full w-full object-cover" />
                       ) : (
                         <Music className="h-6 w-6 text-muted-foreground" />
                       )}
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-foreground truncate">
-                        {single.title}
-                        {single.is_explicit && (
-                          <span className="ml-2 text-xs text-muted-foreground bg-muted px-1 rounded">E</span>
-                        )}
+
+                    <div className="flex-1">
+                      <p className="font-medium truncate">{single.title}</p>
+                      <p className="text-sm text-muted-foreground">
+                        Single • {single.play_count} Plays
                       </p>
-                      <p className="text-sm text-muted-foreground">Single • {single.play_count} Plays</p>
                     </div>
+
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
-                        <Button variant="ghost" size="icon" className="rounded-full">
+                        <Button variant="ghost" size="icon" className="rounded-[10px]">
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </AlertDialogTrigger>
-                      <AlertDialogContent className="rounded-xl">
+                      <AlertDialogContent className="rounded-[10px]">
                         <AlertDialogHeader>
                           <AlertDialogTitle>Single löschen?</AlertDialogTitle>
                           <AlertDialogDescription>
-                            Bist du sicher, dass du "{single.title}" löschen möchtest?
+                            Möchtest du „{single.title}“ wirklich löschen?
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
-                          <AlertDialogCancel className="rounded-full">Abbrechen</AlertDialogCancel>
-                          <AlertDialogAction onClick={() => handleDeleteSingle(single.id)} className="rounded-full">
+                          <AlertDialogCancel className="rounded-[10px]" />
+                          <AlertDialogAction
+                            onClick={() => handleDeleteSingle(single.id)}
+                            className="rounded-[10px]"
+                          >
                             Löschen
                           </AlertDialogAction>
                         </AlertDialogFooter>
@@ -187,127 +183,38 @@ export function ArtistDashboard({
           )}
         </TabsContent>
 
-        {/* Albums Tab */}
+        {/* Albums */}
         <TabsContent value="albums">
-          <div className="mb-4">
-            <Button onClick={() => setShowCreateAlbum(true)} className="rounded-full">
-              <Plus className="h-4 w-4 mr-2" />
-              Album erstellen
-            </Button>
-          </div>
+          <Button onClick={() => setShowCreateAlbum(true)} className="mb-4 rounded-[10px]">
+            <Plus className="h-4 w-4 mr-2" />
+            Album erstellen
+          </Button>
 
-          {!albums || albums.length === 0 ? (
-            <Card className="rounded-xl">
-              <CardContent className="flex flex-col items-center justify-center py-12">
-                <Disc className="h-12 w-12 text-muted-foreground mb-4" />
+          {!albums?.length ? (
+            <Card className="rounded-[10px]">
+              <CardContent className="py-12 text-center">
+                <Disc className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
                 <p className="text-muted-foreground">Noch keine Alben erstellt.</p>
               </CardContent>
             </Card>
           ) : (
             <div className="grid gap-6">
               {albums.map((album) => (
-                <Card key={album.id} className="rounded-xl">
+                <Card key={album.id} className="rounded-[10px]">
                   <CardHeader>
-                    <div className="flex items-start gap-4">
-                      <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-lg bg-muted overflow-hidden">
-                        {album.cover_url ? (
-                          <img
-                            src={album.cover_url || "/placeholder.svg"}
-                            alt={album.title}
-                            className="h-full w-full object-cover"
-                          />
-                        ) : (
-                          <Disc className="h-8 w-8 text-muted-foreground" />
-                        )}
-                      </div>
-                      <div className="flex-1">
-                        <CardTitle className="flex items-center justify-between">
-                          <span>{album.title}</span>
-                          <AlertDialog>
-                            <AlertDialogTrigger asChild>
-                              <Button variant="ghost" size="icon" className="rounded-full">
-                                <Trash2 className="h-4 w-4" />
-                              </Button>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent className="rounded-xl">
-                              <AlertDialogHeader>
-                                <AlertDialogTitle>Album löschen?</AlertDialogTitle>
-                                <AlertDialogDescription>
-                                  Bist du sicher, dass du das Album "{album.title}" und alle darin enthaltenen Songs
-                                  löschen möchtest?
-                                </AlertDialogDescription>
-                              </AlertDialogHeader>
-                              <AlertDialogFooter>
-                                <AlertDialogCancel className="rounded-full">Abbrechen</AlertDialogCancel>
-                                <AlertDialogAction onClick={() => handleDeleteAlbum(album.id)} className="rounded-full">
-                                  Löschen
-                                </AlertDialogAction>
-                              </AlertDialogFooter>
-                            </AlertDialogContent>
-                          </AlertDialog>
-                        </CardTitle>
-                        <CardDescription>{album.songs?.length || 0} Songs</CardDescription>
-                      </div>
-                    </div>
+                    <CardTitle>{album.title}</CardTitle>
+                    <CardDescription>{album.songs?.length || 0} Songs</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="mb-4">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setSelectedAlbum(album as AlbumWithSongs)}
-                        className="rounded-full"
-                      >
-                        <Plus className="h-4 w-4 mr-2" />
-                        Song hinzufügen
-                      </Button>
-                    </div>
-
-                    {album.songs && album.songs.length > 0 ? (
-                      <div className="space-y-2">
-                        {album.songs.map((song, index) => (
-                          <div key={song.id} className="flex items-center gap-3 p-2 rounded-lg bg-muted/50">
-                            <span className="text-sm text-muted-foreground w-6">{index + 1}</span>
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium truncate text-foreground">
-                                {song.title}
-                                {song.is_explicit && (
-                                  <span className="ml-2 text-xs text-muted-foreground bg-muted px-1 rounded">E</span>
-                                )}
-                              </p>
-                            </div>
-                            <AlertDialog>
-                              <AlertDialogTrigger asChild>
-                                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full">
-                                  <Trash2 className="h-3 w-3" />
-                                </Button>
-                              </AlertDialogTrigger>
-                              <AlertDialogContent className="rounded-xl">
-                                <AlertDialogHeader>
-                                  <AlertDialogTitle>Song löschen?</AlertDialogTitle>
-                                  <AlertDialogDescription>
-                                    Bist du sicher, dass du "{song.title}" aus dem Album löschen möchtest?
-                                  </AlertDialogDescription>
-                                </AlertDialogHeader>
-                                <AlertDialogFooter>
-                                  <AlertDialogCancel className="rounded-full">Abbrechen</AlertDialogCancel>
-                                  <AlertDialogAction
-                                    onClick={() => handleDeleteAlbumSong(song.id, album.id)}
-                                    className="rounded-full"
-                                  >
-                                    Löschen
-                                  </AlertDialogAction>
-                                </AlertDialogFooter>
-                              </AlertDialogContent>
-                            </AlertDialog>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <p className="text-sm text-muted-foreground text-center py-4">
-                        Noch keine Songs in diesem Album.
-                      </p>
-                    )}
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="rounded-[10px]"
+                      onClick={() => setSelectedAlbum(album)}
+                    >
+                      <Plus className="h-4 w-4 mr-2" />
+                      Song hinzufügen
+                    </Button>
                   </CardContent>
                 </Card>
               ))}
@@ -332,13 +239,14 @@ export function ArtistDashboard({
 
       {selectedAlbum && (
         <AddSongToAlbumDialog
-          open={!!selectedAlbum}
-          onOpenChange={(open) => !open && setSelectedAlbum(null)}
+          open
           album={selectedAlbum}
           userId={userId}
+          onOpenChange={() => setSelectedAlbum(null)}
           onCreated={refreshData}
         />
       )}
     </div>
   )
 }
+

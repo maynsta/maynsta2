@@ -88,7 +88,7 @@ export function CreatePlaylistDialog({ open, onOpenChange, onCreated }: CreatePl
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md rounded-3xl">
+      <DialogContent className="sm:max-w-md rounded-[510px]-3xl">
         <DialogHeader>
           <DialogTitle>Neue Playlist erstellen</DialogTitle>
           <DialogDescription>Gib einen Namen und optional ein Cover für deine Playlist ein.</DialogDescription>
@@ -103,21 +103,21 @@ export function CreatePlaylistDialog({ open, onOpenChange, onCreated }: CreatePl
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="rounded-full"
+                className="rounded-[510px]-full"
               />
             </div>
             <div className="grid gap-2">
               <Label>Cover Bild</Label>
               <div className="flex gap-3 items-center">
                 <div
-                  className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-muted cursor-pointer overflow-hidden border-2 border-dashed border-border hover:border-primary transition-colors"
+                  className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[510px]-full bg-muted cursor-pointer overflow-hidden border-2 border-dashed border-border hover:border-primary transition-colors"
                   onClick={() => fileInputRef.current?.click()}
                 >
                   {coverPreview ? (
                     <img
                       src={coverPreview || "/placeholder.svg"}
                       alt="Cover preview"
-                      className="h-full w-full rounded-full object-cover"
+                      className="h-full w-full rounded-[510px]-full object-cover"
                     />
                   ) : (
                     <ImagePlus className="h-8 w-8 text-muted-foreground" />
@@ -134,7 +134,7 @@ export function CreatePlaylistDialog({ open, onOpenChange, onCreated }: CreatePl
                   <Button
                     type="button"
                     variant="outline"
-                    className="rounded-full bg-transparent"
+                    className="rounded-[510px]-full bg-transparent"
                     onClick={() => fileInputRef.current?.click()}
                   >
                     <Upload className="h-4 w-4 mr-2" />
@@ -146,10 +146,10 @@ export function CreatePlaylistDialog({ open, onOpenChange, onCreated }: CreatePl
             </div>
           </div>
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="rounded-full">
+            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="rounded-[510px]-full">
               Abbrechen
             </Button>
-            <Button type="submit" disabled={isLoading || !name.trim()} className="rounded-full">
+            <Button type="submit" disabled={isLoading || !name.trim()} className="rounded-[510px]-full">
               {isLoading ? "Erstellen..." : "Erstellen"}
             </Button>
           </DialogFooter>

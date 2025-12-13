@@ -137,134 +137,151 @@ export function CreateSingleDialog({ open, onOpenChange, userId, onCreated }: Cr
     onCreated?.()
   }
 
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>Single hochladen</DialogTitle>
-          <DialogDescription>Lade eine neue Single hoch.</DialogDescription>
-        </DialogHeader>
-        <form onSubmit={handleCreate}>
-          <div className="grid gap-4 py-4">
-            <div className="grid gap-2">
-              <Label htmlFor="title">Titel</Label>
-              <Input
-                id="title"
-                placeholder="Song Titel"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
-              />
-            </div>
+return (
+  <Dialog open={open} onOpenChange={onOpenChange}>
+    <DialogContent className="sm:max-w-md rounded-[10px]">
+      <DialogHeader>
+        <DialogTitle>Single hochladen</DialogTitle>
+        <DialogDescription>Lade eine neue Single hoch.</DialogDescription>
+      </DialogHeader>
 
-            <div className="grid gap-2">
-              <Label>Cover Bild</Label>
-              <div className="flex gap-3 items-center">
-                <div
-                  className="flex h-16 w-16 shrink-0 items-center justify-center rounded-md bg-muted cursor-pointer overflow-hidden border-2 border-dashed border-border hover:border-primary transition-colors"
-                  onClick={() => coverInputRef.current?.click()}
-                >
-                  {coverPreview ? (
-                    <img
-                      src={coverPreview || "/placeholder.svg"}
-                      alt="Cover preview"
-                      className="h-full w-full object-cover"
-                    />
-                  ) : (
-                    <ImagePlus className="h-6 w-6 text-muted-foreground" />
-                  )}
-                </div>
-                <div className="flex-1">
-                  <input
-                    ref={coverInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleCoverChange}
-                    className="hidden"
-                  />
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    className="rounded-full bg-transparent"
-                    onClick={() => coverInputRef.current?.click()}
-                  >
-                    <Upload className="h-4 w-4 mr-2" />
-                    Cover hochladen
-                  </Button>
-                  {coverFile && <p className="text-xs text-muted-foreground mt-1">{coverFile.name}</p>}
-                </div>
-              </div>
-            </div>
+      <form onSubmit={handleCreate}>
+        <div className="grid gap-4 py-4">
+          {/* Titel */}
+          <div className="grid gap-2">
+            <Label htmlFor="title">Titel</Label>
+            <Input
+              id="title"
+              placeholder="Song Titel"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+              className="rounded-[10px]"
+            />
+          </div>
 
-            <div className="grid gap-2">
-              <Label>Audio Datei</Label>
-              <input
-                ref={audioInputRef}
-                type="file"
-                accept="audio/*"
-                onChange={(e) => setAudioFile(e.target.files?.[0] || null)}
-                className="hidden"
-              />
-              <Button
-                type="button"
-                variant="outline"
-                className="rounded-full justify-start bg-transparent"
-                onClick={() => audioInputRef.current?.click()}
+          {/* Cover Upload */}
+          <div className="grid gap-2">
+            <Label>Cover Bild</Label>
+            <div className="flex gap-3 items-center">
+              <div
+                className="flex h-16 w-16 shrink-0 items-center justify-center rounded-[10px] bg-muted cursor-pointer overflow-hidden border-2 border-dashed border-border hover:border-primary transition-colors"
+                onClick={() => coverInputRef.current?.click()}
               >
-                <Music className="h-4 w-4 mr-2" />
-                {audioFile ? audioFile.name : "Audio hochladen"}
-              </Button>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <Label>Expliziter Inhalt</Label>
-                <p className="text-xs text-muted-foreground">Song enthält unangemessene Inhalte</p>
+                {coverPreview ? (
+                  <img
+                    src={coverPreview}
+                    alt="Cover preview"
+                    className="h-full w-full object-cover rounded-[10px]"
+                  />
+                ) : (
+                  <ImagePlus className="h-6 w-6 text-muted-foreground" />
+                )}
               </div>
-              <Switch checked={isExplicit} onCheckedChange={setIsExplicit} />
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <Label>Musikvideo</Label>
-                <p className="text-xs text-muted-foreground">Hat dieser Song ein Musikvideo?</p>
-              </div>
-              <Switch checked={hasVideo} onCheckedChange={setHasVideo} />
-            </div>
-
-            {hasVideo && (
-              <div className="grid gap-2">
-                <Label>Video Datei</Label>
+              <div className="flex-1">
                 <input
-                  ref={videoInputRef}
+                  ref={coverInputRef}
                   type="file"
-                  accept="video/*"
-                  onChange={(e) => setVideoFile(e.target.files?.[0] || null)}
+                  accept="image/*"
+                  onChange={handleCoverChange}
                   className="hidden"
                 />
                 <Button
                   type="button"
                   variant="outline"
-                  className="rounded-full justify-start bg-transparent"
-                  onClick={() => videoInputRef.current?.click()}
+                  size="sm"
+                  className="rounded-[10px] bg-transparent"
+                  onClick={() => coverInputRef.current?.click()}
                 >
                   <Upload className="h-4 w-4 mr-2" />
-                  {videoFile ? videoFile.name : "Video hochladen"}
+                  Cover hochladen
                 </Button>
+                {coverFile && <p className="text-xs text-muted-foreground mt-1">{coverFile.name}</p>}
               </div>
-            )}
+            </div>
           </div>
-          <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="rounded-full">
-              Abbrechen
+
+          {/* Audio Upload */}
+          <div className="grid gap-2">
+            <Label>Audio Datei</Label>
+            <input
+              ref={audioInputRef}
+              type="file"
+              accept="audio/*"
+              onChange={(e) => setAudioFile(e.target.files?.[0] || null)}
+              className="hidden"
+            />
+            <Button
+              type="button"
+              variant="outline"
+              className="rounded-[10px] justify-start bg-transparent"
+              onClick={() => audioInputRef.current?.click()}
+            >
+              <Music className="h-4 w-4 mr-2" />
+              {audioFile ? audioFile.name : "Audio hochladen"}
             </Button>
-            <Button type="submit" disabled={isLoading || !title.trim()} className="rounded-full">
-              {isLoading ? "Hochladen..." : "Hochladen"}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
-  )
+          </div>
+
+          {/* Expliziter Inhalt */}
+          <div className="flex items-center justify-between">
+            <div className="space-y-0.5">
+              <Label>Expliziter Inhalt</Label>
+              <p className="text-xs text-muted-foreground">Song enthält unangemessene Inhalte</p>
+            </div>
+            <Switch checked={isExplicit} onCheckedChange={setIsExplicit} />
+          </div>
+
+          {/* Musikvideo */}
+          <div className="flex items-center justify-between">
+            <div className="space-y-0.5">
+              <Label>Musikvideo</Label>
+              <p className="text-xs text-muted-foreground">Hat dieser Song ein Musikvideo?</p>
+            </div>
+            <Switch checked={hasVideo} onCheckedChange={setHasVideo} />
+          </div>
+
+          {hasVideo && (
+            <div className="grid gap-2">
+              <Label>Video Datei</Label>
+              <input
+                ref={videoInputRef}
+                type="file"
+                accept="video/*"
+                onChange={(e) => setVideoFile(e.target.files?.[0] || null)}
+                className="hidden"
+              />
+              <Button
+                type="button"
+                variant="outline"
+                className="rounded-[10px] justify-start bg-transparent"
+                onClick={() => videoInputRef.current?.click()}
+              >
+                <Upload className="h-4 w-4 mr-2" />
+                {videoFile ? videoFile.name : "Video hochladen"}
+              </Button>
+            </div>
+          )}
+        </div>
+
+        <DialogFooter className="flex gap-2">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => onOpenChange(false)}
+            className="rounded-[10px]"
+          >
+            Abbrechen
+          </Button>
+          <Button
+            type="submit"
+            disabled={isLoading || !title.trim()}
+            className="rounded-[10px]"
+          >
+            {isLoading ? "Hochladen..." : "Hochladen"}
+          </Button>
+        </DialogFooter>
+      </form>
+    </DialogContent>
+  </Dialog>
+)
 }
