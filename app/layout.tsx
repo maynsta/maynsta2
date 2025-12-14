@@ -12,20 +12,20 @@ export const metadata: Metadata = {
   title: "Maynsta",
   description: "Höre und veröffentliche Musik mit Maynsta",
   generator: "maynsta",
-icons: {
-  icon: [
-    {
-      url: "/maynsta-logo.png",
-      media: "(prefers-color-scheme: light)",
-    },
-    {
-      url: "/maynsta-logo.png",
-      media: "(prefers-color-scheme: dark)",
-    },
-  ],
-  apple: "/maynsta-logo.png",
-},
-
+  icons: {
+    icon: [
+      {
+        url: "/maynsta-logo.png",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/maynsta-logo.png",
+        media: "(prefers-color-scheme: dark)",
+      },
+    ],
+    apple: "/maynsta-logo.png",
+  },
+}
 
 export default function RootLayout({
   children,
