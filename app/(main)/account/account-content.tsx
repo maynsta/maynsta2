@@ -433,7 +433,8 @@ export function AccountContent({ profile: initialProfile, userId, userEmail }: A
                     Version
                   </TabsTrigger>
                   <TabsTrigger value="impressum" className="rounded-full">
-                    Impressum
+                    This App was created by  Maynsta Inc.
+                    Maynsta is a Company by the Mayn Cooperation.
                   </TabsTrigger>
                 </TabsList>
 
