@@ -14,9 +14,9 @@ export function AlbumCard({ album, variant = "grid" }: AlbumCardProps) {
     return (
       <Link
         href={`/album/${album.id}`}
-        className="flex items-center gap-3 p-3 rounded-[510px]-lg hover:bg-accent/50 transition-colors"
+        className="flex items-center gap-3 p-3 rounded-lg hover:bg-accent/50 transition-colors"
       >
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[510px] bg-muted overflow-hidden">
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded bg-muted overflow-hidden">
           {album.cover_url ? (
             <img src={album.cover_url || "/placeholder.svg"} alt={album.title} className="h-full w-full object-cover" />
           ) : (
@@ -35,7 +35,7 @@ export function AlbumCard({ album, variant = "grid" }: AlbumCardProps) {
 
   return (
     <Link href={`/album/${album.id}`} className="group">
-      <div className="aspect-square rounded-[510px]-lg bg-muted overflow-hidden mb-3">
+      <div className="aspect-square rounded-lg bg-muted overflow-hidden mb-3">
         {album.cover_url ? (
           <img
             src={album.cover_url || "/placeholder.svg"}

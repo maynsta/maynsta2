@@ -44,7 +44,7 @@ export function PinDialog({ open, onOpenChange, correctPin, onSuccess }: PinDial
       <DialogContent className="sm:max-w-sm">
         <DialogHeader>
           <div className="flex justify-center mb-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-[510px]-full bg-primary/10">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
               <Lock className="h-6 w-6 text-primary" />
             </div>
           </div>

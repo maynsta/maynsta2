@@ -14,9 +14,9 @@ export function PlaylistCard({ playlist, variant = "grid" }: PlaylistCardProps) 
     return (
       <Link
         href={`/playlist/${playlist.id}`}
-        className="flex items-center gap-3 p-3 rounded-[510px]-lg hover:bg-accent/50 transition-colors"
+        className="flex items-center gap-3 p-3 rounded-lg hover:bg-accent/50 transition-colors"
       >
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[510px] bg-muted overflow-hidden">
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded bg-muted overflow-hidden">
           {playlist.cover_url ? (
             <img
               src={playlist.cover_url || "/placeholder.svg"}
@@ -37,7 +37,7 @@ export function PlaylistCard({ playlist, variant = "grid" }: PlaylistCardProps) 
 
   return (
     <Link href={`/playlist/${playlist.id}`} className="group">
-      <div className="aspect-square rounded-[510px]-lg bg-muted overflow-hidden mb-3">
+      <div className="aspect-square rounded-lg bg-muted overflow-hidden mb-3">
         {playlist.cover_url ? (
           <img
             src={playlist.cover_url || "/placeholder.svg"}

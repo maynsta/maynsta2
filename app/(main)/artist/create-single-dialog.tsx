@@ -203,11 +203,11 @@ return (
 
           {/* Audio Upload */}
           <div className="grid gap-2">
-            <Label>Audio Datei</Label>
+            <Label>Audio Datei (MP3, WAV, MPA)</Label>
             <input
               ref={audioInputRef}
               type="file"
-              accept="audio/*"
+              accept=".mp3,.wav,.mpa"
               onChange={(e) => setAudioFile(e.target.files?.[0] || null)}
               className="hidden"
             />
@@ -242,11 +242,11 @@ return (
 
           {hasVideo && (
             <div className="grid gap-2">
-              <Label>Video Datei</Label>
+              <Label>Video Datei (MP4, MOV)</Label>
               <input
                 ref={videoInputRef}
                 type="file"
-                accept="video/*"
+                accept=".mp4,.mov"
                 onChange={(e) => setVideoFile(e.target.files?.[0] || null)}
                 className="hidden"
               />

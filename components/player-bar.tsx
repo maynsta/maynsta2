@@ -39,12 +39,12 @@ export function PlayerBar() {
       <div className="flex h-[76px] items-center px-4">
         {/* Song info */}
         <div className="flex w-1/4 items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-[510px]-full bg-muted overflow-hidden">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted overflow-hidden">
             {currentSong.cover_url ? (
               <img
                 src={currentSong.cover_url || "/placeholder.svg"}
                 alt={currentSong.title}
-                className="h-full w-full rounded-[510px]-full object-cover"
+                className="h-full w-full rounded-full object-cover"
               />
             ) : (
               <Music className="h-6 w-6 text-muted-foreground" />
@@ -62,19 +62,19 @@ export function PlayerBar() {
             <Button
               variant="ghost"
               size="icon"
-              className="h-8 w-8 text-card-foreground rounded-[510px]-full"
+              className="h-8 w-8 text-card-foreground rounded-full"
               onClick={previousSong}
               disabled={!canGoPrevious}
             >
               <SkipBack className="h-4 w-4" />
             </Button>
-            <Button variant="default" size="icon" className="h-10 w-10 rounded-[510px]-full" onClick={togglePlay}>
+            <Button variant="default" size="icon" className="h-10 w-10 rounded-full" onClick={togglePlay}>
               {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5 ml-0.5" />}
             </Button>
             <Button
               variant="ghost"
               size="icon"
-              className="h-8 w-8 text-card-foreground rounded-[510px]-full"
+              className="h-8 w-8 text-card-foreground rounded-full"
               onClick={nextSong}
               disabled={!canGoNext}
             >
